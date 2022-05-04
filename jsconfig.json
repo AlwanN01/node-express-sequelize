@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#root/*": ["src/*"],
+      "#model": ["src/config/model"],
+      "#db": ["src/config/database/mysql.js"],
+      "#control": ["./controller"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
