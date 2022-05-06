@@ -29,6 +29,6 @@ const mahasiswa = db.define(
 )
 // mahasiswa.hasOne(jurusan, { foreignKey: 'kd_jurusan' })
 mahasiswa.belongsTo(jurusan, { foreignKey: 'kd_jurusan' })
-mahasiswa.removeAttribute('id')
+// mahasiswa.removeAttribute('id')
 
 export default mahasiswa

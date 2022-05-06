@@ -5,7 +5,8 @@
       "#root/*": ["src/*"],
       "#model": ["src/config/model"],
       "#db": ["src/config/database/mysql.js"],
-      "#control": ["./controller"]
+      "#control": ["src/controller"],
+      "#middleware/*": ["src/middleware/*"]
     }
   },
   "exclude": ["node_modules", "**/node_modules/*"]

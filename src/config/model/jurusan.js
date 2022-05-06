@@ -19,6 +19,5 @@ const jurusan = db.define(
     freezeTableName: true
   }
 )
-jurusan.removeAttribute('id')
 
 export default jurusan

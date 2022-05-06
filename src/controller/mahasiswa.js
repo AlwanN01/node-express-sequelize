@@ -42,11 +42,39 @@ export const getAll = async (req, res) => {
   }
 }
 
+export const getPagenation = async (req, res) => {
+  const limit = parseInt(req.query.limit) || 10
+  const offset = parseInt(req.query.offset) || 0
+  try {
+    const data = await mahasiswa.findAndCountAll({
+      attributes: { exclude: 'kd_jurusan' },
+      include: [
+        {
+          model: jurusan,
+          attributes: ['kd_jurusan', 'nama_jurusan']
+        }
+      ],
+      limit,
+      offset
+    })
+    res.status(200).json({
+      message: data.length ? 'data didapatkan' : 'data kosong',
+      data
+    })
+  } catch (err) {
+    res.status(500).json({
+      error: {
+        message: err.message
+      }
+    })
+  }
+}
+
 export const getOne = async (req, res) => {
   try {
     const data = await mahasiswa.findOne({
       where: {
-        nim: req.params.nim
+        nim: req.params.key
       }
     })
     res.status(200).json({
@@ -84,9 +112,8 @@ export const getSearch = async (req, res) => {
   }
 }
 export const create = async (req, res) => {
-  console.log(req.file)
   try {
-    const data = await mahasiswa.create({ ...req.body, foto: req.file.path })
+    const data = await mahasiswa.create(req.body)
     res.status(201).json({
       message: 'data berhasil ditambahkan',
       data
@@ -104,7 +131,7 @@ export const update = async (req, res) => {
   try {
     const data = await mahasiswa.update(req.body, {
       where: {
-        nim: req.params.nim
+        nim: req.params.key
       }
     })
     res.status(200).json({
@@ -124,7 +151,7 @@ export const deleteOne = async (req, res) => {
   try {
     const data = await mahasiswa.destroy({
       where: {
-        nim: req.params.nim
+        nim: req.params.key
       }
     })
     res.status(200).json({

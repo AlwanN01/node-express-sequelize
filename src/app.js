@@ -3,7 +3,12 @@ import morgan from 'morgan'
 import router from '#root/router'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import helmet from 'helmet'
+import swaggerUI from 'swagger-ui-express'
+import swaggerDocument from '../apidocs.json'
 const app = express()
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.use(helmet())
 app.use(cors())
 app.use(morgan('dev')) // menggunakan morgan untuk menampilkan log
 app.use(express.urlencoded({ extended: true })) // menggunakan bodyParser untuk mengambil data dari form
@@ -12,17 +17,4 @@ app.use(cookieParser())
 app.use(express.static('public'))
 app.use(router)
 
-app.use((req, res, next) => {
-  const error = new Error('Not Found Bro')
-  error.status = 404
-  next(error)
-})
-app.use((error, req, res, next) => {
-  res.status(error.status || 500)
-  res.json({
-    error: {
-      message: error.message
-    }
-  })
-})
 export default app

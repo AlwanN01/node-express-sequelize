@@ -1,18 +1,10 @@
 import express from 'express'
 import * as route from './export'
+import { notFound } from '#middleware/index'
 const router = express.Router()
 
-function logOriginalUrl(req, res, next) {
-  console.log('Request URL:', req.originalUrl)
-  next()
-}
+router.use('/mahasiswa', route.mahasiswa)
 
-function logMethod(req, res, next) {
-  console.log('Request Type:', req.method)
-  next()
-}
-
-const logStuff = [logMethod, logOriginalUrl]
-router.use('/mahasiswa', logStuff, route.mahasiswa)
+router.use(notFound) // jika endpoint tidak ditemukan
 
 export default router

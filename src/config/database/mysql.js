@@ -9,12 +9,13 @@ const db = new sequelize(process.env.DB_NAME, process.env.USER, process.env.PASS
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  logging: false //logging: console.log query
 })
 // sync db
-db.sync().then(() => {
-  console.log('Database connected')
-})
+// db.sync().then(() => {
+//   console.log('Database connected')
+// })
 // try {
 //   await db.authenticate()
 //   console.log('Connection has been established successfully.')
